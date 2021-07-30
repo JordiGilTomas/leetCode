@@ -8,9 +8,9 @@ function lengthOfLongestSubstring(s: string): number {
       if (acc.length >= result.length) {
         result = acc;
       }
-      return (acc = acc.substring(acc.indexOf(letter) + 1) + letter);
+      return acc.substring(acc.indexOf(letter) + 1) + letter;
     } else {
-      if (index === array.length - 1) {
+      if (index === array.length - 1 && acc.length >= result.length) {
         result = acc += letter;
       } else {
         return (acc += letter);
