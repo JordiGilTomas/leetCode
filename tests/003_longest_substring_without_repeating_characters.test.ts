@@ -32,4 +32,9 @@ describe('Given a string s, find the length of the longest substring without rep
     const expected = 2;
     expect(lengthOfLongestSubstring(s)).toStrictEqual(expected);
   });
+  test('dvdf', () => {
+    const s = 'dvdf';
+    const expected = 3;
+    expect(lengthOfLongestSubstring(s)).toStrictEqual(expected);
+  });
 });
