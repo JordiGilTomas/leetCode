@@ -9,13 +9,13 @@ function lengthOfLongestSubstring(s: string): number {
         result = acc;
       }
       return acc.substring(acc.indexOf(letter) + 1) + letter;
-    } else {
-      if (index === array.length - 1 && acc.length >= result.length) {
-        result = acc += letter;
-      } else {
-        return (acc += letter);
-      }
     }
+
+    if (index !== array.length - 1 || acc.length < result.length) {
+      return (acc += letter);
+    }
+
+    result = acc += letter;
   }, '');
 
   return result.length;
