@@ -8,7 +8,7 @@ function lengthOfLongestSubstring(s: string): number {
       if (acc.length >= result.length) {
         result = acc;
       }
-      return letter;
+      return (acc = acc.substring(acc.indexOf(letter) + 1) + letter);
     } else {
       if (index === array.length - 1) {
         result = acc += letter;
@@ -20,7 +20,5 @@ function lengthOfLongestSubstring(s: string): number {
 
   return result.length;
 }
-
-lengthOfLongestSubstring('au');
 
 export default lengthOfLongestSubstring;
