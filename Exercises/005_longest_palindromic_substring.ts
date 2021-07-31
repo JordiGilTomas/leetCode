@@ -2,51 +2,20 @@ export default function longestPalindrome(s: string): string {
   if (s.length === 1) return s;
   if (s.length === 2 && s[0] !== s[1]) return s[0];
 
-  let left = 0;
-  let right = s.length;
+  let len = s.length - 1;
+  let head = 0;
 
-  let found: string;
-  let found2: string;
-  let found3: string;
+  while (len > 0) {
+    for (let i = 0; i < s.length - len + 1; i++) {
+      const sub = s.substring(i + head, len + i);
 
-  while (left < right) {
-    const sub = s.substring(left, right);
-    const subReversed = sub.split('').reverse().join('');
-
-    if (sub === subReversed) {
-      found = sub;
-      break;
+      const reversed = sub.split('').reverse().join('');
+      if (sub === reversed) {
+        return sub;
+      }
     }
-    right -= 1;
-    left += 1;
+    len -= 1;
+    head = 0;
   }
-
-  right = s.length;
-  left = 0;
-
-  while (left < right) {
-    const sub = s.substring(left, right);
-    const subReversed = sub.split('').reverse().join('');
-    if (sub === subReversed) {
-      found2 = sub;
-      break;
-    }
-    left += 1;
-  }
-
-  left = 0;
-  while (left < right) {
-    const sub = s.substring(left, right);
-    const subReversed = sub.split('').reverse().join('');
-    if (sub === subReversed) {
-      found3 = sub;
-      break;
-    }
-    right -= 1;
-  }
-
-  return [found ?? '', found2 ?? '', found3 ?? ''].reduce(
-    (acc, string) => (string.length > acc.length ? string : acc),
-    '',
-  );
+  return '';
 }
