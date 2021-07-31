@@ -1,8 +1,5 @@
 export default function longestPalindrome(s: string): string {
-  if (s.length === 1) return s;
-  if (s.length === 2) {
-    return s[0] === s[1] ? s : s[0];
-  }
+  if (s[0] === s[s.length - 1] && s === s.split('').reverse().join('')) return s;
 
   let len = s.length - 1;
   let head = 0;
@@ -21,3 +18,5 @@ export default function longestPalindrome(s: string): string {
   }
   return '';
 }
+
+console.log(longestPalindrome('a'));
