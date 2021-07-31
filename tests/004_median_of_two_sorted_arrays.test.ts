@@ -6,12 +6,12 @@ describe('Given two sorted arrays nums1 and nums2 of size m and n respectively, 
   let num2: number[];
   let expected: number;
 
-  //   test('[1,3],[2]', () => {
-  //     num = [1, 3];
-  //     num2 = [2];
-  //     expected = 2.00000;
-  //     expect(findMedianSortedArrays(num, num2)).toBe(expected);
-  //   });
+  test('[1,3],[2]', () => {
+    num = [1, 3];
+    num2 = [2];
+    expected = 2.0;
+    expect(findMedianSortedArrays(num, num2)).toBe(expected);
+  });
 
   test('[1,2],[3,4]', () => {
     num = [1, 2];
