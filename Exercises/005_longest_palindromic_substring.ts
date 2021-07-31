@@ -13,14 +13,16 @@ export default function longestPalindrome(s: string): string {
     const sub = s.substring(left, right);
     const subReversed = sub.split('').reverse().join('');
 
-    if (sub.substring(left + 1, right) === subReversed.substring(left, right - 1)) {
-      found = sub.substring(left + 1, right);
+    if (sub === subReversed) {
+      found = sub;
       break;
     }
     right -= 1;
+    left += 1;
   }
 
   right = s.length;
+  left = 0;
 
   while (left < right) {
     const sub = s.substring(left, right);
@@ -43,7 +45,7 @@ export default function longestPalindrome(s: string): string {
     right -= 1;
   }
 
-  return [found, found2, found3].reduce(
+  return [found ?? '', found2 ?? '', found3 ?? ''].reduce(
     (acc, string) => (string.length > acc.length ? string : acc),
     '',
   );
