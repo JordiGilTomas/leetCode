@@ -34,9 +34,9 @@ describe.only('Given a string s, return the longest palindromic substring in s',
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('abb', () => {
-    s = 'bb';
-    expected = 'bb';
+  it('eabcb', () => {
+    s = 'eabcb';
+    expected = 'bcb';
     expect(longestPalindrome(s)).toBe(expected);
   });
 });
