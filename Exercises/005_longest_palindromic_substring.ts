@@ -1,5 +1,6 @@
 export default function longestPalindrome(s: string): string {
   if (s.length === 1) return s;
+  if (s.length === 2 && s[0] !== s[1]) return s[0];
 
   let left = 0;
   let right = s.length;
@@ -7,8 +8,10 @@ export default function longestPalindrome(s: string): string {
 
   while (left < right) {
     let sub = s.substring(left, right);
-    if (sub === sub.split('').reverse().join('')) {
-      return sub;
+    let subReversed = sub.split('').reverse().join('');
+
+    if (sub.substring(left + 1, right) === subReversed.substring(left, right - 1)) {
+      return sub.substring(left + 1, right);
     }
     if (rightturn) {
       right -= 1;
@@ -19,5 +22,3 @@ export default function longestPalindrome(s: string): string {
     }
   }
 }
-
-console.log(longestPalindrome('babad'));
