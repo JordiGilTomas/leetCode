@@ -6,17 +6,16 @@ export default function longestPalindrome(s: string): string {
 
   while (len > 0) {
     for (let i = 0; i < s.length - len + 1; i++) {
-      const sub = s.substring(i + head, len + i);
+      if (s[i + head] === s[len + i - 1]) {
+        const sub = s.substring(i + head, len + i);
+        const reversed = sub.split('').reverse().join('');
 
-      const reversed = sub.split('').reverse().join('');
-      if (sub === reversed) {
-        return sub;
+        if (sub === reversed) {
+          return sub;
+        }
       }
     }
     len -= 1;
     head = 0;
   }
-  return '';
 }
-
-console.log(longestPalindrome('a'));
