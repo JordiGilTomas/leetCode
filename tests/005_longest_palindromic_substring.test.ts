@@ -6,8 +6,8 @@ describe.only('Given a string s, return the longest palindromic substring in s',
 
   it('babad', () => {
     s = 'babad';
-    let expected = ['bab', 'aba'];
-    expect(expected.includes(longestPalindrome(s)));
+    const bothExpected = ['bab', 'aba'];
+    expect(bothExpected.includes(longestPalindrome(s)));
   });
 
   it('cbbd', () => {
@@ -37,6 +37,11 @@ describe.only('Given a string s, return the longest palindromic substring in s',
   it('eabcb', () => {
     s = 'eabcb';
     expected = 'bcb';
+    expect(longestPalindrome(s)).toBe(expected);
+  });
+  it('ccd', () => {
+    s = 'ccd';
+    expected = 'cc';
     expect(longestPalindrome(s)).toBe(expected);
   });
 });
