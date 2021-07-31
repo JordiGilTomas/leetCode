@@ -19,6 +19,8 @@ module.exports = {
         ts: 'never',
       },
     ],
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
   },
   settings: {
     'import/resolver': {
