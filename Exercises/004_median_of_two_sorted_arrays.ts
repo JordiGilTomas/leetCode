@@ -1,7 +1,7 @@
 export function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
   if (!nums1.length && !nums2.length) return 1;
 
-  let sorted = [...nums1, ...nums2].sort();
+  let sorted = [...nums1, ...nums2].sort((a, b) => (a < b ? -1 : 1));
   const middle = sorted.length / 2;
 
   if (sorted.length % 2) {
