@@ -54,4 +54,11 @@ describe('Given two sorted arrays nums1 and nums2 of size m and n respectively, 
     expected = -1.0;
     expect(findMedianSortedArrays(num, num2)).toBe(expected);
   });
+
+  test('[10000],[10001]', () => {
+    num = [100000];
+    num2 = [100001];
+    expected = 100000.5;
+    expect(findMedianSortedArrays(num, num2)).toBe(expected);
+  });
 });
