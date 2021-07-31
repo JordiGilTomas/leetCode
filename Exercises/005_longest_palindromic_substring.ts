@@ -9,6 +9,7 @@ export default function longestPalindrome(s: string): string {
   while (left < right) {
     let sub = s.substring(left, right);
     let subReversed = sub.split('').reverse().join('');
+    if (sub === subReversed) return sub;
 
     if (sub.substring(left + 1, right) === subReversed.substring(left, right - 1)) {
       return sub.substring(left + 1, right);
