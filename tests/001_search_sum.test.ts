@@ -24,3 +24,10 @@ test('[3,3], target[6]', () => {
   expected = [0, 1];
   expect(twoSum(nums, target)).toStrictEqual(expected);
 });
+
+test('[], target[]', () => {
+  nums = [];
+  target = null;
+  expected = [];
+  expect(twoSum(nums, target)).toStrictEqual(expected);
+});
