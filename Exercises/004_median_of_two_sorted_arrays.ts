@@ -7,5 +7,6 @@ export function findMedianSortedArrays(nums1: number[], nums2: number[]): number
   if (sorted.length % 2) {
     return sorted[Math.round(middle) - 1];
   }
-  return Math.max((sorted[middle] + sorted[middle + 1]) / 2 - 1, 0);
+
+  return Math.max((sorted[middle - 1] + sorted[middle]) / 2, 0);
 }
