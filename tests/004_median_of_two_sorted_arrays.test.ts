@@ -1,4 +1,4 @@
-import { findMedianSortedArrays } from '../Exercises/004_median_of_two_sorted_arrays';
+import findMedianSortedArrays from '../Exercises/004_median_of_two_sorted_arrays';
 
 // The overall run time complexity should be O(log (m+n))
 describe('Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.', () => {

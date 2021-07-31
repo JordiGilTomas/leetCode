@@ -33,8 +33,8 @@ test('[9,9,9,9,9,9,9] and [9,9,9,9]', () => {
     9,
     new ListNode(
       9,
-      new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9)))))
-    )
+      new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))))),
+    ),
   );
   const l2 = new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9))));
   const expected = new ListNode(
@@ -43,9 +43,9 @@ test('[9,9,9,9,9,9,9] and [9,9,9,9]', () => {
       9,
       new ListNode(
         9,
-        new ListNode(9, new ListNode(0, new ListNode(0, new ListNode(0, new ListNode(1)))))
-      )
-    )
+        new ListNode(9, new ListNode(0, new ListNode(0, new ListNode(0, new ListNode(1))))),
+      ),
+    ),
   );
 
   expect(ListNode.addTwoNumbers(l1, l2)).toStrictEqual(expected);
@@ -110,35 +110,35 @@ test('big test', () => {
                                                           0,
                                                           new ListNode(
                                                             0,
-                                                            new ListNode(0, new ListNode(1))
-                                                          )
-                                                        )
-                                                      )
-                                                    )
-                                                  )
-                                                )
-                                              )
-                                            )
-                                          )
-                                        )
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                            )
-                          )
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
+                                                            new ListNode(0, new ListNode(1)),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
   const l2 = new ListNode(5, new ListNode(6, new ListNode(4)));
   const expected = new ListNode(
@@ -199,35 +199,35 @@ test('big test', () => {
                                                           0,
                                                           new ListNode(
                                                             0,
-                                                            new ListNode(0, new ListNode(1))
-                                                          )
-                                                        )
-                                                      )
-                                                    )
-                                                  )
-                                                )
-                                              )
-                                            )
-                                          )
-                                        )
-                                      )
-                                    )
-                                  )
-                                )
-                              )
-                            )
-                          )
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
-      )
-    )
+                                                            new ListNode(0, new ListNode(1)),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 
   expect(ListNode.addTwoNumbers(l1, l2)).toStrictEqual(expected);

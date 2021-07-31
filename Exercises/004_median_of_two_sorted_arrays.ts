@@ -1,4 +1,4 @@
-export function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
+export default function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
   if (!nums1.length && !nums2.length) return 1;
 
   const sorted = new Int32Array([...nums1, ...nums2]).sort();

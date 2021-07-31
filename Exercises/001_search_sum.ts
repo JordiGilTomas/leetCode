@@ -7,6 +7,7 @@ function twoSum(nums: number[], target: number): number[] {
     }
     result.set(target - nums[i], i);
   }
+  return [];
 }
 
 export default twoSum;

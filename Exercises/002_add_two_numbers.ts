@@ -1,7 +1,8 @@
-//Definition for singly-linked list.
+// Definition for singly-linked list.
 class ListNode {
   val: number;
   next: ListNode | null;
+
   constructor(val?: number, next?: ListNode | null) {
     this.val = val === undefined ? 0 : val;
     this.next = next === undefined ? null : next;
@@ -44,6 +45,7 @@ class ListNode {
 
     return result;
   }
+
   static sumValues(head1: ListNode, head2: ListNode, acc: number): number {
     return (head1?.val ?? 0) + (head2?.val ?? 0) + acc;
   }

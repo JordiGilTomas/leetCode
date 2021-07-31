@@ -12,10 +12,11 @@ function lengthOfLongestSubstring(s: string): number {
     }
 
     if (index !== array.length - 1 || acc.length < result.length) {
-      return (acc += letter);
+      return acc + letter;
     }
 
-    result = acc += letter;
+    result = acc + letter;
+    return result;
   }, '');
 
   return result.length;
