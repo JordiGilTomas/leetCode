@@ -21,6 +21,8 @@ module.exports = {
     ],
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+    'no-trailing-spaces': 'never',
+    'padded-blocks': 'never',
   },
   settings: {
     'import/resolver': {
