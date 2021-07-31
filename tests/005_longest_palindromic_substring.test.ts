@@ -1,13 +1,13 @@
 import longestPalindrome from '../Exercises/005_longest_palindromic_substring';
 
-describe('Given a string s, return the longest palindromic substring in s', () => {
+describe.only('Given a string s, return the longest palindromic substring in s', () => {
   let s: string;
   let expected: string;
 
   it('babad', () => {
     s = 'babad';
-    expected = 'bab';
-    expect(longestPalindrome(s)).toBe(expected);
+    let expected = ['bab', 'aba'];
+    expect(expected.includes(longestPalindrome(s)));
   });
 
   it('cbbd', () => {
