@@ -1,6 +1,8 @@
 export default function longestPalindrome(s: string): string {
   if (s.length === 1) return s;
-  if (s.length === 2 && s[0] !== s[1]) return s[0];
+  if (s.length === 2) {
+    return s[0] === s[1] ? s : s[0];
+  }
 
   let len = s.length - 1;
   let head = 0;
