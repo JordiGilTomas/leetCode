@@ -28,4 +28,10 @@ describe('Given a signed 32-bit integer x, return x with its digits reversed', (
     expected = 0;
     expect(reverse(x)).toBe(expected);
   });
+
+  it('1534236469', () => {
+    x = 1534236469;
+    expected = 0;
+    expect(reverse(x)).toBe(expected);
+  });
 });
