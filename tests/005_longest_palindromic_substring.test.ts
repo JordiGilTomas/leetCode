@@ -1,6 +1,6 @@
 import longestPalindrome from '../Exercises/005_longest_palindromic_substring';
 
-describe.only('Given a string s, return the longest palindromic substring in s', () => {
+describe('Given a string s, return the longest palindromic substring in s', () => {
   let s: string;
   let expected: string;
 
