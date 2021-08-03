@@ -4,10 +4,10 @@ export default function convert(s: string, numRows: number): string {
 
   if (numRows === 1) return s;
 
-  const result: string[][] = [];
+  const result: string[] = [];
 
   for (let i = 0; i < s.length; i++) {
-    result[row] = [...(result[row] ?? []), s[i]];
+    result[row] = `${result[row] ?? ''}${s[i]}`;
 
     if (isAsc) {
       row += 1;
@@ -17,5 +17,5 @@ export default function convert(s: string, numRows: number): string {
       if (row === 0) isAsc = true;
     }
   }
-  return result.flat().join('');
+  return result.join('');
 }
