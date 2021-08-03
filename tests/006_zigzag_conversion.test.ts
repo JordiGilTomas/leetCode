@@ -29,4 +29,11 @@ describe('The string "PAYPALISHIRING" is written in a zigzag pattern on a given 
     expected = 'A';
     expect(convert(s, numRows)).toStrictEqual(expected);
   });
+
+  it('AB', () => {
+    s = 'AB';
+    numRows = 1;
+    expected = 'AB';
+    expect(convert(s, numRows)).toStrictEqual(expected);
+  });
 });
