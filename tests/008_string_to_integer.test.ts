@@ -57,4 +57,10 @@ describe('Implement the myAtoi(string s) function, which converts a string to a 
     expected = 2147483647;
     expect(myAtoi(input)).toBe(expected);
   });
+
+  it('   +0 123', () => {
+    input = '   +0 123';
+    expected = 0;
+    expect(myAtoi(input)).toBe(expected);
+  });
 });
