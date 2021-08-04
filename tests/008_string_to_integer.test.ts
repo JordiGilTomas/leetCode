@@ -10,7 +10,7 @@ describe('Implement the myAtoi(string s) function, which converts a string to a 
     expect(myAtoi(input)).toBe(expected);
   });
 
-  it('42', () => {
+  it('(spaces)     -42', () => {
     input = '   -42';
     expected = -42;
     expect(myAtoi(input)).toBe(expected);
