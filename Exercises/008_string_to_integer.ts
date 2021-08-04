@@ -8,7 +8,9 @@ export default function myAtoi(s: string): number {
 
     if (s[i] !== ' ') {
       if (result.length && Number.isNaN(+s[i])) {
-        return Number.isNaN(+result) ? 0 : +result;
+        return Number.isNaN(+result)
+          ? 0
+          : Math.min(Math.max(+result, (-2) ** 31), 2 ** 31 - 1);
       }
 
       if (!result.length && s[i] === '-') {
