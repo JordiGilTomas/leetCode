@@ -4,16 +4,14 @@ export default function isPalindrome(x: number): boolean {
 
   const digits = Math.round(Math.log10(x));
 
-  for (let i = digits; i >= 0; i--) {
-    const actualDigit = Math.floor(
-      (x % 10 ** (digits - i + 1)) / 10 ** (digits - i),
-    );
-    const reversedDigit = Math.floor(
-      (((x / 10 ** i) % 10) * 10 ** Math.round(digits - i)) /
-        10 ** (digits - i),
-    );
-    if (i === Math.floor(digits / 2)) return true;
+  for (let i = digits - 1; i >= 0; i--) {
+    const actualDigit = Math.trunc(x / 10 ** i) % 10;
+    const reversedDigit = Math.floor((x / 10 ** (digits - i)) % 10);
+
     if (actualDigit !== reversedDigit) return false;
+    if (i === Math.round(digits / 2)) return true;
   }
   return false;
 }
+
+console.log(isPalindrome(9999));
