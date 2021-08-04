@@ -9,9 +9,7 @@ export default function isPalindrome(x: number): boolean {
     const reversedDigit = Math.floor((x / 10 ** (digits - i)) % 10);
 
     if (actualDigit !== reversedDigit) return false;
-    if (i === Math.round(digits / 2)) return true;
+    if (i === Math.floor(digits / 2)) return true;
   }
   return false;
 }
-
-console.log(isPalindrome(9999));
