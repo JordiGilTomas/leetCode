@@ -10,15 +10,12 @@ export default function myAtoi(s: string): number {
 
     if (result.length && trimmed[i] === ' ') return 0;
 
-    if (trimmed[i] !== ' ') {
-      if (result.length && Number.isNaN(+trimmed[i])) {
-        return Number.isNaN(+result)
-          ? 0
-          : Math.min(Math.max(+result, (-2) ** 31), 2 ** 31 - 1);
-      }
-
-      result = `${result}${trimmed[i]}`;
+    if (result.length && Number.isNaN(+trimmed[i])) {
+      return Number.isNaN(+result)
+        ? 0
+        : Math.min(Math.max(+result, (-2) ** 31), 2 ** 31 - 1);
     }
+    result = `${result}${trimmed[i]}`;
   }
 
   return Number.isNaN(+result)
