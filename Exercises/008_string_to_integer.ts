@@ -6,6 +6,8 @@ export default function myAtoi(s: string): number {
       return +result;
     }
 
+    if (result.length && s[i] === ' ') return 0;
+
     if (s[i] !== ' ') {
       if (result.length && Number.isNaN(+s[i])) {
         return Number.isNaN(+result)
@@ -13,20 +15,7 @@ export default function myAtoi(s: string): number {
           : Math.min(Math.max(+result, (-2) ** 31), 2 ** 31 - 1);
       }
 
-      if (!result.length && s[i] === '-') {
-        result = `${result}${s[i]}`;
-      } else if (
-        !result.length &&
-        Number.isNaN(+s[i]) &&
-        s[i] !== '+' &&
-        s[i]
-      ) {
-        return 0;
-      } else {
-        result = `${result}${s[i]}`;
-      }
-    } else if (result.length) {
-      return 0;
+      result = `${result}${s[i]}`;
     }
   }
 
