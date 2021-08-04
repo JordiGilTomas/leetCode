@@ -45,4 +45,10 @@ describe('Implement the myAtoi(string s) function, which converts a string to a 
     expected = 0;
     expect(myAtoi(input)).toBe(expected);
   });
+
+  it('+1', () => {
+    input = '+1';
+    expected = 1;
+    expect(myAtoi(input)).toBe(expected);
+  });
 });
