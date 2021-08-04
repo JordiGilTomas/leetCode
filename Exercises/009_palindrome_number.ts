@@ -1,3 +1,3 @@
 export default function isPalindrome(x: number): boolean {
-  return null;
+  return x === +[...x.toString()].reverse().join('');
 }
