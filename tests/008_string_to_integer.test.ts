@@ -33,4 +33,16 @@ describe('Implement the myAtoi(string s) function, which converts a string to a 
     expected = -2147483648;
     expect(myAtoi(input)).toBe(expected);
   });
+
+  it('-+12', () => {
+    input = '-+12';
+    expected = 0;
+    expect(myAtoi(input)).toBe(expected);
+  });
+
+  it('-', () => {
+    input = '-';
+    expected = 0;
+    expect(myAtoi(input)).toBe(expected);
+  });
 });
