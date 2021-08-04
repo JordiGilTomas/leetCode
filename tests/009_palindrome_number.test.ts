@@ -27,4 +27,10 @@ describe('Given an integer x, return true if x is palindrome integer', () => {
     expected = false;
     expect(isPalindrome(x)).toBe(expected);
   });
+
+  it('', () => {
+    x = null;
+    expected = false;
+    expect(isPalindrome(x)).toBe(expected);
+  });
 });
