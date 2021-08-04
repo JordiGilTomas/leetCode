@@ -11,5 +11,3 @@ export default function reverse(x: number): number {
   }
   return +reversed.reduce((acc, n) => acc.concat(n), x >= 0 ? '' : '-');
 }
-
-reverse(6463847422);
