@@ -2,6 +2,9 @@ export default function myAtoi(s: string): number {
   let result = '';
 
   for (let i = 0; i < s.length; i++) {
+    if (Number.isInteger(+result) && result !== '' && s[i] === ' ') {
+      return +result;
+    }
     if (s[i] !== ' ') {
       if (result.length && Number.isNaN(+s[i])) {
         return Number.isNaN(+result) ? 0 : +result;
