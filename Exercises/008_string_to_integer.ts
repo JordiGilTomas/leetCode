@@ -15,5 +15,5 @@ export default function myAtoi(s: string): number {
 
   return Number.isNaN(+result)
     ? 0
-    : Math.max(Math.max((-2) ** 31, +result, Math.min(+result, 2 ** 31 - 1)));
+    : Math.min(Math.max((-2) ** 31, +result), 2 ** 31 - 1);
 }
