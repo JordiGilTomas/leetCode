@@ -34,4 +34,34 @@ describe('Given a signed 32-bit integer x, return x with its digits reversed', (
     expected = 0;
     expect(reverse(x)).toBe(expected);
   });
+
+  it('1563847412', () => {
+    x = 1563847412;
+    expected = 0;
+    expect(reverse(x)).toBe(expected);
+  });
+
+  it('2147483647', () => {
+    x = 2147483647;
+    expected = 0;
+    expect(reverse(x)).toBe(expected);
+  });
+
+  it('1463847412', () => {
+    x = 1463847412;
+    expected = 2147483641;
+    expect(reverse(x)).toBe(expected);
+  });
+
+  it('2**34+1', () => {
+    x = 2 ** 34 + 1;
+    expected = 0;
+    expect(reverse(x)).toBe(expected);
+  });
+
+  it('-64638474221', () => {
+    x = -6463847422;
+    expected = 0;
+    expect(reverse(x)).toBe(expected);
+  });
 });
