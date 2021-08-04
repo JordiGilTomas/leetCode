@@ -13,9 +13,7 @@ export default function myAtoi(s: string): number {
     }
   }
 
-  return Math.max(
-    Math.max((-2) ** 31, +result, Math.min(+result, 2 ** 31 - 1)),
-  );
+  return Number.isNaN(+result)
+    ? 0
+    : Math.max(Math.max((-2) ** 31, +result, Math.min(+result, 2 ** 31 - 1)));
 }
-
-console.log(myAtoi('-+12'));
