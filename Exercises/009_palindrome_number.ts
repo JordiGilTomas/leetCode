@@ -1,5 +1,6 @@
 export default function isPalindrome(x: number): boolean {
   if (x < 0) return false;
+  if (x !== null && x >= 0 && x < 10) return true;
 
   const digits = Math.round(Math.log10(x));
 
