@@ -1,21 +1,23 @@
 export default function myAtoi(s: string): number {
   let result = '';
 
-  for (let i = 0; i < s.length; i++) {
-    if (Number.isInteger(+result) && result !== '' && s[i] === ' ') {
+  const trimmed = s.trim();
+
+  for (let i = 0; i < trimmed.length; i++) {
+    if (Number.isInteger(+result) && result !== '' && trimmed[i] === ' ') {
       return +result;
     }
 
-    if (result.length && s[i] === ' ') return 0;
+    if (result.length && trimmed[i] === ' ') return 0;
 
-    if (s[i] !== ' ') {
-      if (result.length && Number.isNaN(+s[i])) {
+    if (trimmed[i] !== ' ') {
+      if (result.length && Number.isNaN(+trimmed[i])) {
         return Number.isNaN(+result)
           ? 0
           : Math.min(Math.max(+result, (-2) ** 31), 2 ** 31 - 1);
       }
 
-      result = `${result}${s[i]}`;
+      result = `${result}${trimmed[i]}`;
     }
   }
 
