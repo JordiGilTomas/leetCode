@@ -21,7 +21,7 @@ export default function isMatch(s: string, p: string): boolean {
     }
     if (p[i] === '.') {
       index += 1;
-      if (index === s.length) return true;
+      if (index === s.length && i === p.length - 1) return true;
       continue;
     }
     if (p[i] === s[index]) {
