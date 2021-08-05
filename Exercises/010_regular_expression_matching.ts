@@ -9,7 +9,7 @@ export default function isMatch(s: string, p: string): boolean {
     if (p[i] === '*') continue;
     if (p[i + 1] === '*') {
       if (i + 1 === p.length - 1 && index + 1 === s.length - 1) return true;
-      while (p[i] === s[index]) {
+      while (p[i] === s[index] && index <= i + 1) {
         index += 1;
       }
       continue;
@@ -29,4 +29,4 @@ export default function isMatch(s: string, p: string): boolean {
   return false;
 }
 
-console.log(isMatch('abcd', 'd*'));
+console.log(isMatch('aaa', 'a*a'));
