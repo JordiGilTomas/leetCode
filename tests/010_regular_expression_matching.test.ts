@@ -3,7 +3,7 @@ import isMatch from '../Exercises/010_regular_expression_matching';
 describe('Given an input string s and a pattern p, implement regular expression matching with support for "." and "*"', () => {
   /*
     where:
-        '.' Matches any single character.​​​​
+        '.' Matches any single character.
         '*' Matches zero or more of the preceding element.
         The matching should cover the entire input string (not partial).
     */
@@ -106,6 +106,14 @@ describe('Given an input string s and a pattern p, implement regular expression 
   it('a ab*', () => {
     s = 'a';
     p = 'ab*';
+
+    expected = true;
+    expect(isMatch(s, p)).toBe(expected);
+  });
+
+  it('bbbba ab*', () => {
+    s = 'bbbba';
+    p = '.*a*a';
 
     expected = true;
     expect(isMatch(s, p)).toBe(expected);
