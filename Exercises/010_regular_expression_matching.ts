@@ -34,6 +34,7 @@ export default function isMatch(s: string, p: string): boolean {
     if (p[i] === s[index]) {
       index += 1;
       if (index === s.length && i === p.length - 1) return true;
+      need += 1;
       continue;
     }
     if (index === s.length) return false;
