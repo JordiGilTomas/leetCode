@@ -25,8 +25,7 @@ export default function isMatch(s: string, p: string): boolean {
       if (index === s.length) return true;
       continue;
     }
+    if (index === s.length) return true;
   }
   return false;
 }
-
-console.log(isMatch('aaa', 'a*a'));
