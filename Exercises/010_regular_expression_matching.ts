@@ -1,4 +1,6 @@
 export default function isMatch(s: string, p: string): boolean {
+  if (p === '.*') return true;
+
   if (![...p].some((l) => l === '*' || l === '.')) {
     return s === p;
   }
