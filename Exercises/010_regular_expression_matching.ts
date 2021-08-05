@@ -14,7 +14,7 @@ export default function isMatch(s: string, p: string): boolean {
     }
     if (p[i + 1] === '*') {
       if (i + 1 === p.length - 1 && index + 1 === s.length - 1) return true;
-      while (p[i] === s[index] && index !== s.length - 1) {
+      while ((p[i] === s[index] || p[i] === '.') && index !== s.length - 1) {
         index += 1;
       }
       continue;
