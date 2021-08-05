@@ -78,4 +78,12 @@ describe('Given an input string s and a pattern p, implement regular expression 
     expected = true;
     expect(isMatch(s, p)).toBe(expected);
   });
+
+  it('aaa ab*a*c*a', () => {
+    s = 'aaa';
+    p = 'ab*a*c*a';
+
+    expected = true;
+    expect(isMatch(s, p)).toBe(expected);
+  });
 });
