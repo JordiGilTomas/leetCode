@@ -47,7 +47,7 @@ describe('Given an input string s and a pattern p, implement regular expression 
     expect(isMatch(s, p)).toBe(expected);
   });
 
-  it('mississippi mis*is*p*.', () => {
+  it('mississippi mis*is*ip*.', () => {
     s = 'mississippi';
     p = 'mis*is*ip*.';
 
