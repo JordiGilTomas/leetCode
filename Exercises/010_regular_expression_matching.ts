@@ -6,6 +6,7 @@ export default function isMatch(s: string, p: string): boolean {
   }
 
   let index = 0;
+  let need = 0;
 
   for (let i = 0; i < p.length; i++) {
     if (p[i] === '*') {
@@ -21,7 +22,9 @@ export default function isMatch(s: string, p: string): boolean {
     }
     if (p[i] === '.') {
       index += 1;
-      if (index === s.length && i === p.length - 1) return true;
+      need += 1;
+      if ((index === s.length || need === s.length) && i === p.length - 1)
+        return true;
       continue;
     }
     if (p[i] === s[index]) {
@@ -33,3 +36,5 @@ export default function isMatch(s: string, p: string): boolean {
   }
   return false;
 }
+
+console.log(isMatch('ab', '.*..'));

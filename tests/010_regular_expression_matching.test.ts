@@ -111,7 +111,7 @@ describe('Given an input string s and a pattern p, implement regular expression 
     expect(isMatch(s, p)).toBe(expected);
   });
 
-  it('bbbba ab*', () => {
+  it('bbbba .*a*a', () => {
     s = 'bbbba';
     p = '.*a*a';
 
