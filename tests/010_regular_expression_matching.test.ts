@@ -126,4 +126,12 @@ describe('Given an input string s and a pattern p, implement regular expression 
     expected = false;
     expect(isMatch(s, p)).toBe(expected);
   });
+
+  it('ab .*..', () => {
+    s = 'ab';
+    p = '.*..';
+
+    expected = true;
+    expect(isMatch(s, p)).toBe(expected);
+  });
 });
