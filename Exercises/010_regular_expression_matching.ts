@@ -5,39 +5,128 @@ export default function isMatch(s: string, p: string): boolean {
     return s === p;
   }
 
-  let index = 0;
-  let need = 0;
+  let indexS = 0;
+  let bypass = false;
+  const bufferBypass = {};
 
-  for (let i = 0; i < p.length; i++) {
-    if (p[i] === '*') {
-      if (index === s.length && i === p.length - 1) return true;
-      if ((index === s.length || need === s.length) && i === p.length - 1) {
+  for (let indexP = 0; indexP < p.length; indexP++) {
+    const subP = p.substring(indexP);
+    if (subP[0] === '*') {
+      if (indexS === s.length && indexP === p.length - 1) {
         return true;
       }
       continue;
     }
-    if (p[i + 1] === '*') {
-      if (i + 1 === p.length - 1 && index + 1 === s.length - 1) return true;
-      while ((p[i] === s[index] || p[i] === '.') && index !== s.length - 1) {
-        index += 1;
-      }
-      continue;
-    }
-    if (p[i] === '.') {
-      index += 1;
-      need += 1;
-      if ((index === s.length || need === s.length) && i === p.length - 1) {
+
+    const nextDot = subP.indexOf('.');
+    const nextAsterisk = subP.indexOf('*');
+
+    // Caso sólo con un punto
+    if (
+      nextDot !== -1 &&
+      (nextAsterisk === -1 ||
+        (nextDot < nextAsterisk && nextAsterisk - nextDot !== 1))
+    ) {
+      if (indexP === p.length - 1 && indexS === s.length - 1) {
         return true;
       }
-      continue;
+
+      const pattern = subP.substring(0, nextDot);
+      if (bypass) {
+        const indexBypass = s.substring(indexS).indexOf(pattern);
+        if (indexBypass === -1) {
+          return false;
+        }
+        indexS += indexBypass + pattern.length;
+        indexP += pattern.length;
+        if (indexP === p.length - 1 && indexS === s.length - 1) {
+          return true;
+        }
+      }
+      if (s.substring(indexS, pattern.length) === pattern || !pattern) {
+        indexS += pattern.length + 1;
+        indexP += pattern.length;
+        if (indexP === p.length - 1 && indexS === s.length) {
+          return true;
+        }
+        if (indexS > s.length) {
+          return false;
+        }
+        continue;
+      } else {
+        return false;
+      }
     }
-    if (p[i] === s[index]) {
-      index += 1;
-      if (index === s.length && i === p.length - 1) return true;
-      need += 1;
-      continue;
+
+    // Caso con .*
+    if (nextDot !== -1 && nextAsterisk - nextDot === 1) {
+      bufferBypass[subP[0]] ??= 0;
+      const pattern = subP.substring(0, nextDot);
+      if (s.substring(indexS).indexOf(pattern) !== -1) {
+        indexP += pattern.length + 1;
+        if (indexP === p.length - 1 && indexS === s.length) {
+          return true;
+        }
+        bypass = true;
+        continue;
+      } else {
+        return false;
+      }
     }
-    if (index === s.length) return false;
+    // Caso letra y *
+    if (nextAsterisk !== -1) {
+      const pattern = subP.substring(0, nextAsterisk - 1);
+      const origin = s.substring(indexS, indexS + pattern.length);
+      if (origin !== '' && pattern !== '' && origin === pattern) {
+        indexS += pattern.length;
+        Object.entries(bufferBypass).forEach(([k]) => {
+          if (k !== subP[0]) delete bufferBypass[k];
+        });
+      }
+
+      bufferBypass[subP[nextAsterisk - 1]] ??= 0;
+      while (s[indexS] === subP[nextAsterisk - 1]) {
+        indexS += 1;
+        bufferBypass[subP[nextAsterisk - 1]] += 1;
+      }
+      if (bufferBypass[subP[0]] > 0) {
+        Object.entries(bufferBypass).forEach(([k]) => {
+          if (k !== subP[0]) delete bufferBypass[k];
+        });
+      }
+      if (s.substring(indexS).indexOf(pattern) !== -1) {
+        // indexS += pattern.length + 1;
+        if (indexP === p.length - 1 && indexS === s.length) {
+          return true;
+        }
+      }
+      indexP += nextAsterisk;
+    }
+
+    // Si ya no hay asterico ni punto
+    if (nextAsterisk === -1 && nextDot === -1) {
+      if (bypass) {
+        if (s.substring(indexS).indexOf(subP) !== -1) {
+          return true;
+        }
+      }
+      if (subP === s.substring(indexS)) {
+        return true;
+      }
+
+      if (bufferBypass[subP[0]] > 0) {
+        while (bufferBypass[subP[0]] >= 0) {
+          if (s.substring(indexS) === subP) {
+            return true;
+          }
+          bufferBypass[subP[0]] -= 1;
+          indexS -= 1;
+        }
+      }
+      return false;
+    }
   }
+
+  if (indexS === s.length) return true;
   return false;
 }
