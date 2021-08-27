@@ -77,6 +77,9 @@ export default function isMatch(s: string, p: string): boolean {
     if (nextAsterisk !== -1) {
       const pattern = subP.substring(0, nextAsterisk - 1);
       const origin = s.substring(indexS, indexS + pattern.length);
+
+      if (origin !== pattern) return false;
+
       if (origin !== '' && pattern !== '' && origin === pattern) {
         indexS += pattern.length;
         Object.entries(bufferBypass).forEach(([k]) => {
