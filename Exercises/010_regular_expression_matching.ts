@@ -95,7 +95,6 @@ export default function isMatch(s: string, p: string): boolean {
         });
       }
       if (s.substring(indexS).indexOf(pattern) !== -1) {
-        // indexS += pattern.length + 1;
         if (indexP === p.length - 1 && indexS === s.length) {
           return true;
         }
@@ -106,7 +105,10 @@ export default function isMatch(s: string, p: string): boolean {
     // Si ya no hay asterico ni punto
     if (nextAsterisk === -1 && nextDot === -1) {
       if (bypass) {
-        if (s.substring(indexS).indexOf(subP) !== -1) {
+        if (
+          s.substring(indexS).indexOf(subP) !== -1 &&
+          s[s.length - 1] === p[p.length - 1]
+        ) {
           return true;
         }
       }
