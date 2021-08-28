@@ -62,6 +62,9 @@ export default function isMatch(s: string, p: string): boolean {
     if (nextDot !== -1 && nextAsterisk - nextDot === 1) {
       bufferBypass[subP[0]] ??= 0;
       const pattern = subP.substring(0, nextDot);
+
+      if (pattern && s.substring(indexS, 1) !== pattern[0]) return false;
+
       if (s.substring(indexS).indexOf(pattern) !== -1) {
         indexP += pattern.length + 1;
         if (indexP === p.length - 1 && indexS === s.length) {
@@ -132,6 +135,8 @@ export default function isMatch(s: string, p: string): boolean {
     }
   }
 
-  if (indexS === s.length || bypass) return true;
+  if (indexS === s.length || bypass) {
+    return true;
+  }
   return false;
 }
