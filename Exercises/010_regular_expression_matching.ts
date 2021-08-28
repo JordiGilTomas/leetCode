@@ -8,6 +8,7 @@ export default function isMatch(s: string, p: string): boolean {
   let indexS = 0;
   let bypass = false;
   const bufferBypass = {};
+  let accPattern = '';
 
   for (let indexP = 0; indexP < p.length; indexP++) {
     const subP = p.substring(indexP);
@@ -81,7 +82,9 @@ export default function isMatch(s: string, p: string): boolean {
       const pattern = subP.substring(0, nextAsterisk - 1);
       const origin = s.substring(indexS, indexS + pattern.length);
 
-      if (origin !== pattern) return false;
+      if (origin !== pattern) {
+        accPattern += pattern;
+      }
 
       if (origin !== '' && pattern !== '' && origin === pattern) {
         indexS += pattern.length;
@@ -124,7 +127,7 @@ export default function isMatch(s: string, p: string): boolean {
 
       if (bufferBypass[subP[0]] > 0) {
         while (bufferBypass[subP[0]] >= 0) {
-          if (s.substring(indexS) === subP) {
+          if (s.substring(indexS) === accPattern + subP) {
             return true;
           }
           bufferBypass[subP[0]] -= 1;
