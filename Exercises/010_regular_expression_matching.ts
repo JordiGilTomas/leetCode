@@ -7,6 +7,7 @@ export default function isMatch(s: string, p: string): boolean {
 
   let indexS = 0;
   let bypass = false;
+  let fullBypass = false;
   const bufferBypass = {};
   let accPattern = '';
 
@@ -61,17 +62,27 @@ export default function isMatch(s: string, p: string): boolean {
 
     // Caso con .*
     if (nextDot !== -1 && nextAsterisk - nextDot === 1) {
+      if (fullBypass) {
+        indexS += s.substring(indexS).indexOf(subP[0]);
+        bypass = false;
+      }
       bufferBypass[subP[0]] ??= 0;
       const pattern = subP.substring(0, nextDot);
 
-      if (pattern && s.substring(indexS, 1) !== pattern[0]) return false;
+      if (pattern.length === 1 && s.substring(indexS, 1) !== pattern[0]) {
+        return false;
+      }
 
       if (s.substring(indexS).indexOf(pattern) !== -1) {
         indexP += pattern.length + 1;
+
+        if (pattern.length) {
+          indexS += pattern.length;
+        }
         if (indexP === p.length - 1 && indexS === s.length) {
           return true;
         }
-        bypass = true;
+        fullBypass = true;
         continue;
       } else {
         return false;
@@ -79,6 +90,11 @@ export default function isMatch(s: string, p: string): boolean {
     }
     // Caso letra y *
     if (nextAsterisk !== -1) {
+      bypass = true;
+      if (fullBypass) {
+        indexS += s.substring(indexS).indexOf(subP[0]);
+      }
+
       const pattern = subP.substring(0, nextAsterisk - 1);
       const origin = s.substring(indexS, indexS + pattern.length);
 
@@ -87,6 +103,7 @@ export default function isMatch(s: string, p: string): boolean {
       }
 
       if (origin !== '' && pattern !== '' && origin === pattern) {
+        fullBypass = false;
         indexS += pattern.length;
         Object.entries(bufferBypass).forEach(([k]) => {
           if (k !== subP[0]) delete bufferBypass[k];
@@ -109,6 +126,7 @@ export default function isMatch(s: string, p: string): boolean {
         }
       }
       indexP += nextAsterisk;
+      if (indexP === p.length - 1 && indexS === s.length - 1) return true;
     }
 
     // Si ya no hay asterico ni punto
@@ -134,12 +152,19 @@ export default function isMatch(s: string, p: string): boolean {
           indexS -= 1;
         }
       }
+
+      if (fullBypass && indexP === p.length - 1) {
+        if (s.substring(s.length - 1) !== subP) return false;
+      }
+
+      if (fullBypass) continue;
       return false;
     }
   }
 
-  if (indexS === s.length || bypass) {
+  if (indexS === s.length || fullBypass) {
     return true;
   }
+
   return false;
 }
