@@ -206,4 +206,12 @@ describe('Given an input string s and a pattern p, implement regular expression 
     expected = false;
     expect(isMatch(s, p)).toBe(expected);
   });
+
+  it('aaa ab*a', () => {
+    s = 'aaa';
+    p = 'ab*a';
+
+    expected = false;
+    expect(isMatch(s, p)).toBe(expected);
+  });
 });
