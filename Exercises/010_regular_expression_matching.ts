@@ -132,6 +132,6 @@ export default function isMatch(s: string, p: string): boolean {
     }
   }
 
-  if (indexS === s.length) return true;
+  if (indexS === s.length || bypass) return true;
   return false;
 }
