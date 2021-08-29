@@ -70,7 +70,20 @@ export default function isMatch(s: string, p: string): boolean {
       const pattern = subP.substring(0, nextDot);
 
       if (pattern.length === 1 && s.substring(indexS, 1) !== pattern[0]) {
-        return false;
+        while (
+          bufferBypass[subP[0]] > 0 &&
+          s.substring(indexS, 1) !== pattern[0]
+        ) {
+          indexS -= 1;
+          bufferBypass[subP[0]] -= 1;
+          if (s.substring(indexS, 1) === pattern[0]) {
+            indexP += 1;
+          }
+        }
+
+        if (s.substring(indexS, 1) !== pattern[0]) {
+          return false;
+        }
       }
 
       if (s.substring(indexS).indexOf(pattern) !== -1) {
@@ -156,7 +169,9 @@ export default function isMatch(s: string, p: string): boolean {
       }
 
       if (fullBypass && indexP === p.length - 1) {
-        if (s.substring(s.length - 1) !== subP) return false;
+        if (s.substring(s.length - 1) !== subP) {
+          return false;
+        }
       }
 
       if (fullBypass) continue;
