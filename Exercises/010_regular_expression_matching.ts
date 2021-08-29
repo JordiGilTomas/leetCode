@@ -126,7 +126,9 @@ export default function isMatch(s: string, p: string): boolean {
         }
       }
       indexP += nextAsterisk;
-      if (indexP === p.length - 1 && indexS === s.length - 1) return true;
+      if (indexP === p.length - 1 && indexS === s.length) {
+        return true;
+      }
     }
 
     // Si ya no hay asterico ni punto
@@ -158,6 +160,7 @@ export default function isMatch(s: string, p: string): boolean {
       }
 
       if (fullBypass) continue;
+
       return false;
     }
   }
