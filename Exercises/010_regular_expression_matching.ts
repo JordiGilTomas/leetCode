@@ -131,7 +131,7 @@ export default function isMatch(s: string, p: string): boolean {
 
     // Si ya no hay asterico ni punto
     if (nextAsterisk === -1 && nextDot === -1) {
-      if (bypass) {
+      if (fullBypass) {
         if (
           s.substring(indexS).indexOf(subP) !== -1 &&
           s[s.length - 1] === p[p.length - 1]
