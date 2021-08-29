@@ -105,7 +105,11 @@ export default function isMatch(s: string, p: string): boolean {
     if (nextAsterisk !== -1) {
       bypass = true;
       if (fullBypass) {
-        indexS += s.substring(indexS).indexOf(subP[0]);
+        if (s.substring(indexS).indexOf(subP.substring(0, nextAsterisk - 1))) {
+          indexS += s
+            .substring(indexS)
+            .lastIndexOf(subP.substring(0, nextAsterisk - 1));
+        }
       }
 
       const pattern = subP.substring(0, nextAsterisk - 1);
@@ -140,6 +144,12 @@ export default function isMatch(s: string, p: string): boolean {
       }
       indexP += nextAsterisk;
       if (indexP === p.length - 1 && indexS === s.length) {
+        if (!s.substring(indexS)) return true;
+
+        if (s.substring(indexS) !== subP[0]) {
+          return false;
+        }
+
         return true;
       }
     }
