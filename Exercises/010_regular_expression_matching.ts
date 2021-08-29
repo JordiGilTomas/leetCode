@@ -81,7 +81,7 @@ export default function isMatch(s: string, p: string): boolean {
           }
         }
 
-        if (s.substring(indexS, 1) !== pattern[0]) {
+        if (s.substring(indexS, indexS + 1) !== pattern[0]) {
           return false;
         }
       }
