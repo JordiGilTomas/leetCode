@@ -60,6 +60,9 @@ export default function isMatch(s: string, p: string): boolean {
             return false;
           }
         }
+        if (indexP === p.length - 1 && indexS === s.length - 1) {
+          return true;
+        }
         continue;
       } else {
         return false;
