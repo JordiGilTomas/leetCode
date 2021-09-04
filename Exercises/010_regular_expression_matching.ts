@@ -33,6 +33,11 @@ export default function isMatch(s: string, p: string): boolean {
       }
 
       const pattern = subP.slice(0, nextDot);
+
+      if (!pattern && indexP === p.length - 1 && s.length - indexS > 1) {
+        return false;
+      }
+
       if (fullBypass && pattern) {
         const indexBypass = s.slice(indexS).lastIndexOf(pattern);
 
@@ -45,9 +50,11 @@ export default function isMatch(s: string, p: string): boolean {
           return true;
         }
       }
+
       if (s.slice(indexS, indexS + pattern.length) === pattern || !pattern) {
         indexS += pattern.length + 1;
         indexP += pattern.length;
+
         if (indexP === p.length - 1 && indexS === s.length) {
           return true;
         }
@@ -60,9 +67,13 @@ export default function isMatch(s: string, p: string): boolean {
             return false;
           }
         }
-        if (indexP === p.length - 1 && indexS === s.length - 1) {
+        if (indexP === p.length - 1 && indexS === s.length) {
           return true;
         }
+        if (indexP === p.length - 1 && s.length - indexS === 1) {
+          return true;
+        }
+
         continue;
       } else {
         return false;
