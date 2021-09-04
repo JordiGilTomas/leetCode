@@ -34,7 +34,12 @@ export default function isMatch(s: string, p: string): boolean {
 
       const pattern = subP.slice(0, nextDot);
 
-      if (!pattern && indexP === p.length - 1 && s.length - indexS > 1) {
+      if (
+        !pattern &&
+        indexP === p.length - 1 &&
+        s.length - indexS > 1 &&
+        !fullBypass
+      ) {
         return false;
       }
 
