@@ -6,7 +6,6 @@ export default function isMatch(s: string, p: string): boolean {
   }
 
   let indexS = 0;
-  let bypass = false;
   let fullBypass = false;
   const bufferBypass = {};
   let accPattern = '';
@@ -34,23 +33,28 @@ export default function isMatch(s: string, p: string): boolean {
       }
 
       const pattern = subP.substring(0, nextDot);
-      if (bypass) {
-        const indexBypass = s.substring(indexS).indexOf(pattern);
+      if (fullBypass && pattern) {
+        const indexBypass = s.substring(indexS).lastIndexOf(pattern);
+
         if (indexBypass === -1) {
           return false;
         }
-        indexS += indexBypass + pattern.length;
+        indexS += indexBypass;
         indexP += pattern.length;
         if (indexP === p.length - 1 && indexS === s.length - 1) {
           return true;
         }
       }
-      if (s.substring(indexS, pattern.length) === pattern || !pattern) {
+      if (
+        s.substring(indexS, indexS + pattern.length) === pattern ||
+        !pattern
+      ) {
         indexS += pattern.length + 1;
         indexP += pattern.length;
         if (indexP === p.length - 1 && indexS === s.length) {
           return true;
         }
+
         if (indexS > s.length) {
           return false;
         }
@@ -64,7 +68,6 @@ export default function isMatch(s: string, p: string): boolean {
     if (nextDot !== -1 && nextAsterisk - nextDot === 1) {
       if (fullBypass) {
         indexS += s.substring(indexS).indexOf(subP[0]);
-        bypass = false;
       }
       bufferBypass[subP[0]] ??= 0;
       const pattern = subP.substring(0, nextDot);
@@ -103,9 +106,12 @@ export default function isMatch(s: string, p: string): boolean {
     }
     // Caso letra y *
     if (nextAsterisk !== -1) {
-      bypass = true;
       if (fullBypass) {
-        if (s.substring(indexS).indexOf(subP.substring(0, nextAsterisk - 1))) {
+        if (
+          nextAsterisk - 1 > 0 &&
+          s.substring(indexS).indexOf(subP.substring(0, nextAsterisk - 1)) !==
+            -1
+        ) {
           indexS += s
             .substring(indexS)
             .lastIndexOf(subP.substring(0, nextAsterisk - 1));
@@ -130,6 +136,7 @@ export default function isMatch(s: string, p: string): boolean {
       bufferBypass[subP[nextAsterisk - 1]] ??= 0;
       while (s[indexS] === subP[nextAsterisk - 1]) {
         indexS += 1;
+        fullBypass = false;
         bufferBypass[subP[nextAsterisk - 1]] += 1;
       }
       if (bufferBypass[subP[0]] > 0) {
@@ -144,13 +151,18 @@ export default function isMatch(s: string, p: string): boolean {
       }
       indexP += nextAsterisk;
       if (indexP === p.length - 1 && indexS === s.length) {
-        if (!s.substring(indexS)) return true;
+        if (!s.substring(indexS)) {
+          return true;
+        }
 
         if (s.substring(indexS) !== subP[0]) {
           return false;
         }
 
         return true;
+      }
+      if (indexP === p.length - 1 && indexS < s.length - 1 && !fullBypass) {
+        return false;
       }
     }
 
