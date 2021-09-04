@@ -52,7 +52,13 @@ export default function isMatch(s: string, p: string): boolean {
           return true;
         }
         if (indexS > s.length) {
-          return false;
+          while (bufferBypass[s.slice(indexS - 2)[0]] > 0) {
+            bufferBypass[s.slice(indexS - 1)[0]] -= 1;
+            indexS -= 1;
+          }
+          if (indexS > s.length) {
+            return false;
+          }
         }
         continue;
       } else {
