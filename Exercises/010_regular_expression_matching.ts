@@ -11,7 +11,7 @@ export default function isMatch(s: string, p: string): boolean {
   let accPattern = '';
 
   for (let indexP = 0; indexP < p.length; indexP++) {
-    const subP = p.substring(indexP);
+    const subP = p.slice(indexP);
     if (subP[0] === '*') {
       if (indexS === s.length && indexP === p.length - 1) {
         return true;
@@ -32,9 +32,9 @@ export default function isMatch(s: string, p: string): boolean {
         return true;
       }
 
-      const pattern = subP.substring(0, nextDot);
+      const pattern = subP.slice(0, nextDot);
       if (fullBypass && pattern) {
-        const indexBypass = s.substring(indexS).lastIndexOf(pattern);
+        const indexBypass = s.slice(indexS).lastIndexOf(pattern);
 
         if (indexBypass === -1) {
           return false;
@@ -45,16 +45,12 @@ export default function isMatch(s: string, p: string): boolean {
           return true;
         }
       }
-      if (
-        s.substring(indexS, indexS + pattern.length) === pattern ||
-        !pattern
-      ) {
+      if (s.slice(indexS, indexS + pattern.length) === pattern || !pattern) {
         indexS += pattern.length + 1;
         indexP += pattern.length;
         if (indexP === p.length - 1 && indexS === s.length) {
           return true;
         }
-
         if (indexS > s.length) {
           return false;
         }
@@ -67,29 +63,28 @@ export default function isMatch(s: string, p: string): boolean {
     // Caso con .*
     if (nextDot !== -1 && nextAsterisk - nextDot === 1) {
       if (fullBypass) {
-        indexS += s.substring(indexS).indexOf(subP[0]);
+        indexS += s.slice(indexS).indexOf(subP[0]);
       }
-      bufferBypass[subP[0]] ??= 0;
-      const pattern = subP.substring(0, nextDot);
+      if (subP[nextAsterisk - 1] !== '.') {
+        bufferBypass[subP[0]] ??= 0;
+      }
+      const pattern = subP.slice(0, nextDot);
 
-      if (pattern.length === 1 && s.substring(indexS, 1) !== pattern[0]) {
-        while (
-          bufferBypass[subP[0]] > 0 &&
-          s.substring(indexS, 1) !== pattern[0]
-        ) {
+      if (pattern.length === 1 && s.slice(indexS, 1) !== pattern[0]) {
+        while (bufferBypass[subP[0]] > 0 && s.slice(indexS, 1) !== pattern[0]) {
           indexS -= 1;
           bufferBypass[subP[0]] -= 1;
-          if (s.substring(indexS, 1) === pattern[0]) {
+          if (s.slice(indexS, 1) === pattern[0]) {
             indexP += 1;
           }
         }
 
-        if (s.substring(indexS, indexS + 1) !== pattern[0]) {
+        if (s.slice(indexS, indexS + 1) !== pattern[0]) {
           return false;
         }
       }
 
-      if (s.substring(indexS).indexOf(pattern) !== -1) {
+      if (s.slice(indexS).indexOf(pattern) !== -1) {
         indexP += pattern.length + 1;
 
         if (pattern.length) {
@@ -107,22 +102,39 @@ export default function isMatch(s: string, p: string): boolean {
     // Caso letra y *
     if (nextAsterisk !== -1) {
       if (fullBypass) {
-        if (
-          nextAsterisk - 1 > 0 &&
-          s.substring(indexS).indexOf(subP.substring(0, nextAsterisk - 1)) !==
-            -1
-        ) {
-          indexS += s
-            .substring(indexS)
-            .lastIndexOf(subP.substring(0, nextAsterisk - 1));
+        const pattern = subP.slice(
+          0,
+          nextAsterisk === 1 ? nextAsterisk : nextAsterisk - 1,
+        );
+        if (nextAsterisk > 1) {
+          fullBypass = false;
+        }
+
+        if (pattern) {
+          const patternToByPass = s.slice(indexS).lastIndexOf(pattern);
+
+          if (patternToByPass !== -1) {
+            indexS += patternToByPass;
+            fullBypass = false;
+
+            for (let i = 1; i < patternToByPass; i++) {
+              const letter = s.slice(indexS - i - 1, patternToByPass)[0];
+              bufferBypass[letter] = (bufferBypass[subP[0]] ??= 0) + 1;
+            }
+          }
         }
       }
-
-      const pattern = subP.substring(0, nextAsterisk - 1);
-      const origin = s.substring(indexS, indexS + pattern.length);
+      const pattern = subP.slice(0, nextAsterisk - 1);
+      const origin = s.slice(indexS, indexS + pattern.length);
 
       if (origin !== pattern) {
         accPattern += pattern;
+        if (indexS === s.length) {
+          while (bufferBypass[s.slice(indexS - 1)] > 0) {
+            bufferBypass[s.slice(indexS - 1)] -= 1;
+            indexS -= 1;
+          }
+        }
       }
 
       if (origin !== '' && pattern !== '' && origin === pattern) {
@@ -139,29 +151,33 @@ export default function isMatch(s: string, p: string): boolean {
         fullBypass = false;
         bufferBypass[subP[nextAsterisk - 1]] += 1;
       }
+
       if (bufferBypass[subP[0]] > 0) {
         Object.entries(bufferBypass).forEach(([k]) => {
           if (k !== subP[0]) delete bufferBypass[k];
         });
       }
-      if (s.substring(indexS).indexOf(pattern) !== -1) {
+      if (s.slice(indexS).indexOf(pattern) !== -1) {
         if (indexP === p.length - 1 && indexS === s.length) {
           return true;
         }
       }
       indexP += nextAsterisk;
       if (indexP === p.length - 1 && indexS === s.length) {
-        if (!s.substring(indexS)) {
+        if (!s.slice(indexS)) {
           return true;
         }
 
-        if (s.substring(indexS) !== subP[0]) {
+        if (s.slice(indexS) !== subP[0]) {
           return false;
         }
-
         return true;
       }
       if (indexP === p.length - 1 && indexS < s.length - 1 && !fullBypass) {
+        return false;
+      }
+
+      if (indexP === p.length - 1 && s.slice(indexS) !== subP && !fullBypass) {
         return false;
       }
     }
@@ -170,19 +186,19 @@ export default function isMatch(s: string, p: string): boolean {
     if (nextAsterisk === -1 && nextDot === -1) {
       if (fullBypass) {
         if (
-          s.substring(indexS).indexOf(subP) !== -1 &&
+          s.slice(indexS).lastIndexOf(subP) !== -1 &&
           s[s.length - 1] === p[p.length - 1]
         ) {
           return true;
         }
       }
-      if (subP === s.substring(indexS)) {
+      if (subP === s.slice(indexS)) {
         return true;
       }
 
       if (bufferBypass[subP[0]] > 0) {
         while (bufferBypass[subP[0]] >= 0) {
-          if (s.substring(indexS) === accPattern + subP) {
+          if (s.slice(indexS) === accPattern + subP) {
             return true;
           }
           bufferBypass[subP[0]] -= 1;
@@ -191,7 +207,7 @@ export default function isMatch(s: string, p: string): boolean {
       }
 
       if (fullBypass && indexP === p.length - 1) {
-        if (s.substring(s.length - 1) !== subP) {
+        if (s.slice(s.length - 1) !== subP) {
           return false;
         }
       }
