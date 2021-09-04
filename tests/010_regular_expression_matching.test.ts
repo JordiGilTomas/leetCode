@@ -262,4 +262,12 @@ describe('Given an input string s and a pattern p, implement regular expression 
     expected = true;
     expect(isMatch(s, p)).toBe(expected);
   });
+
+  it('bbacbcabbbbbcacabb aa*c*b*a*.*a*a.*.', () => {
+    s = 'bbacbcabbbbbcacabb';
+    p = 'aa*c*b*a*.*a*a.*.';
+
+    expected = false;
+    expect(isMatch(s, p)).toBe(expected);
+  });
 });
