@@ -125,16 +125,20 @@ export default function isMatch(s: string, p: string): boolean {
         }
       }
       const pattern = subP.slice(0, nextAsterisk - 1);
-      const origin = s.slice(indexS, indexS + pattern.length);
+      let origin = s.slice(indexS, indexS + pattern.length);
 
       if (origin !== pattern) {
         accPattern += pattern;
-        if (indexS === s.length) {
-          while (bufferBypass[s.slice(indexS - 1)] > 0) {
-            bufferBypass[s.slice(indexS - 1)] -= 1;
-            indexS -= 1;
-          }
+        while (bufferBypass[s.slice(indexS - 1)[0]] > 0) {
+          bufferBypass[s.slice(indexS - 1)[0]] -= 1;
+          indexS -= 1;
         }
+      }
+
+      origin = s.slice(indexS, indexS + pattern.length);
+
+      if (origin !== pattern) {
+        return false;
       }
 
       if (origin !== '' && pattern !== '' && origin === pattern) {
@@ -224,3 +228,4 @@ export default function isMatch(s: string, p: string): boolean {
 
   return false;
 }
+
