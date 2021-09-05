@@ -15,7 +15,9 @@ export default function isMatch(s: string, p: string): boolean {
         if (
           sIndex === s.length &&
           !reverse &&
-          (pIndex === p.length - 1 || p.slice(pIndex + 1) !== '*')
+          (pIndex === p.length - 1 ||
+            (p.slice(pIndex + 1) !== '*' &&
+              (letterBuffer[sIndex - 1] ?? 0) > 0))
         ) {
           return false;
         }
@@ -27,6 +29,14 @@ export default function isMatch(s: string, p: string): boolean {
             return false;
           }
 
+          break;
+        }
+
+        if (
+          sIndex === s.length &&
+          (letterBuffer[s.slice(sIndex - 1)] ?? 0) > 0
+        ) {
+          letterBuffer[sIndex - 1] -= 1;
           break;
         }
 
@@ -89,6 +99,7 @@ export default function isMatch(s: string, p: string): boolean {
             }
             dotBuffer = '';
           }
+          reverse = false;
           break;
         }
 
