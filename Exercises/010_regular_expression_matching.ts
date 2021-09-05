@@ -23,11 +23,15 @@ export default function isMatch(s: string, p: string): boolean {
         if (reverse) {
           sLastIndex -= 1;
           dotBuffer = s.slice(sLastIndex)[0] + dotBuffer;
+          if (dotBuffer.length > s.length) {
+            return false;
+          }
+
           break;
         }
 
         sIndex += 1;
-        reverse = false;
+
         break;
       }
       case '*': {
