@@ -90,6 +90,10 @@ export default function isMatch(s: string, p: string): boolean {
           }
         }
         if (reverse) {
+          if ((letterBuffer[actualLetter] ?? false) === false) {
+            return false;
+          }
+
           while (
             s.slice(sIndex - 1)[0] !== actualLetter &&
             (letterBuffer[s.slice(sIndex - 1, sIndex)] ?? 0) > 0
