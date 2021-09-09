@@ -52,6 +52,9 @@ export default function isMatch(s: string, p: string): boolean {
             sIndex += 1;
           }
           reverse = true;
+          if (pIndex === p.length - 1) {
+            return true;
+          }
           break;
         }
         if (!reverse) {
