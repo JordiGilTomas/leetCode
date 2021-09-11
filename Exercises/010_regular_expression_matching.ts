@@ -34,7 +34,9 @@ export default function isMatch(s: string, p: string): boolean {
           sIndex += 1;
         } else {
           if (letterBuffer[s.slice(-1)] > 0) {
-            return true;
+            if (pIndex === p.length - 1) {
+              return true;
+            }
           }
           return false;
         }
