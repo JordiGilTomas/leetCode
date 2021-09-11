@@ -1,128 +1,114 @@
 export default function isMatch(s: string, p: string): boolean {
   let sIndex = 0;
-  let sLastIndex = 0;
-  let reverse = false;
-  const letterBuffer = {};
-  let dotBuffer = '';
+  let fullByPass = false;
+  const letterBuffer: { [key: string]: number } = {};
 
   for (let pIndex = 0; pIndex < p.length; pIndex++) {
-    const backLetter = p.slice(pIndex - 1)[0];
-    const actualLetter = p.slice(pIndex)[0];
-    const nextLetter = p.slice(pIndex + 1)[0];
+    const patternLetter = p.slice(pIndex, pIndex + 1);
+    const nextPatternLetter = p.slice(pIndex + 1, pIndex + 2);
 
-    switch (actualLetter) {
+    switch (patternLetter) {
       case '.': {
-        if (
-          sIndex === s.length &&
-          !reverse &&
-          (pIndex === p.length - 1 ||
-            (p.slice(pIndex + 1) !== '*' &&
-              (letterBuffer[sIndex - 1] ?? 0) > 0))
-        ) {
-          return false;
-        }
-
-        if (reverse) {
-          sLastIndex -= 1;
-          dotBuffer = s.slice(sLastIndex)[0] + dotBuffer;
-          if (dotBuffer.length > s.length) {
-            return false;
-          }
-
-          break;
-        }
-
-        if (
-          sIndex === s.length &&
-          (letterBuffer[s.slice(sIndex - 1)] ?? 0) > 0
-        ) {
-          letterBuffer[sIndex - 1] -= 1;
-          break;
-        }
-
-        sIndex += 1;
-
-        break;
-      }
-      case '*': {
-        if (backLetter === '.') {
-          while (sIndex < s.length) {
-            const letter = s.slice(sIndex)[0];
-            letterBuffer[letter] = (letterBuffer[letter] ??= 0) + 1;
-            sIndex += 1;
-          }
-          reverse = true;
+        if (nextPatternLetter === '*') {
+          fullByPass = true;
+          pIndex += 1;
           if (pIndex === p.length - 1) {
             return true;
           }
           break;
         }
-        if (!reverse) {
-          while (s.slice(sIndex)[0] === backLetter) {
-            const letter = s.slice(sIndex)[0];
-            letterBuffer[letter] = (letterBuffer[letter] ??= 0) + 1;
+
+        if (fullByPass) {
+          fullByPass = false;
+          do {
+            if (isMatch(s.slice(sIndex), p.slice(pIndex))) {
+              return true;
+            }
             sIndex += 1;
-          }
-          break;
-        }
-        while (s.slice(sIndex)[0] === backLetter) {
-          const letter = s.slice(sIndex)[0];
-          letterBuffer[letter] = (letterBuffer[letter] ??= 0) + 1;
-          sIndex -= 1;
-        }
-        if (dotBuffer.length > s.length) {
+          } while (sIndex < s.length);
+
           return false;
         }
+
+        if (sIndex < s.length) {
+          sIndex += 1;
+        } else {
+          if (letterBuffer[s.slice(-1)] > 0) {
+            return true;
+          }
+          return false;
+        }
+
         break;
       }
       default: {
-        if (nextLetter === '*') {
-          break;
+        if (fullByPass) {
+          const userString = s.slice(sIndex);
+          return `${s} `
+            .slice(sIndex)
+            .split('')
+            .some((l, i) => {
+              if (
+                l === p.slice(pIndex, pIndex + 1) ||
+                nextPatternLetter === '*'
+              ) {
+                return isMatch(userString.slice(i), p.slice(pIndex));
+              }
+
+              if (nextPatternLetter === '*' && i === s.length - 1) {
+                if (isMatch(userString.slice(i + 1), p.slice(pIndex))) {
+                  return true;
+                }
+              }
+
+              return false;
+            });
         }
 
-        if (sIndex === s.length && !reverse) {
-          if ((letterBuffer[actualLetter] ?? 0) === 0) {
-            return false;
+        const userLetter = s.slice(sIndex, sIndex + 1);
+
+        if (nextPatternLetter === '*') {
+          Object.keys(letterBuffer).forEach((key) => {
+            if (key !== userLetter) {
+              delete letterBuffer.key;
+            }
+          });
+
+          let foundCoincidence = false;
+
+          while (s.slice(sIndex, sIndex + 1) === patternLetter) {
+            letterBuffer[s.slice(sIndex, sIndex + 1)] =
+              (letterBuffer[s.slice(sIndex, sIndex + 1)] ?? 0) + 1;
+            sIndex += 1;
+            foundCoincidence = true;
           }
-          letterBuffer[actualLetter] -= 1;
-          if (sIndex === s.length) {
+
+          if (foundCoincidence) {
+            Object.keys(letterBuffer).forEach((key) => {
+              if (key !== userLetter) {
+                delete letterBuffer.key;
+              }
+            });
+          }
+          if (sIndex === s.length && pIndex === p.length - 1) {
             return true;
           }
-        }
-        if (reverse) {
-          if ((letterBuffer[actualLetter] ?? false) === false) {
-            return false;
-          }
-
-          while (
-            s.slice(sIndex - 1)[0] !== actualLetter &&
-            (letterBuffer[s.slice(sIndex - 1, sIndex)] ?? 0) > 0
-          ) {
-            sIndex -= 1;
-          }
-          if (dotBuffer) {
-            if (dotBuffer.length > sIndex) {
-              return false;
-            }
-            dotBuffer = '';
-          }
-          reverse = false;
+          pIndex += 1;
           break;
         }
 
-        if (actualLetter !== s.slice(sIndex)[0]) {
-          if ((letterBuffer[actualLetter] ?? 0) > 0) {
-            letterBuffer[actualLetter] -= 1;
+        if (s.slice(sIndex, sIndex + 1) === p.slice(pIndex, pIndex + 1)) {
+          sIndex += 1;
+        } else {
+          if (letterBuffer[patternLetter] > 0) {
+            letterBuffer[patternLetter] -= 1;
             break;
           }
           return false;
         }
-        sIndex += 1;
-        break;
       }
     }
   }
-
   if (sIndex === s.length) {
     return true;
   }
