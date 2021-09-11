@@ -350,4 +350,12 @@ describe('Given an input string s and a pattern p, implement regular expression 
     expected = false;
     expect(isMatch(s, p)).toBe(expected);
   });
+
+  it('bccbbabcaccacbcacaa .*b.*c*.*.*.c*a*.c', () => {
+    s = 'bccbbabcaccacbcacaa';
+    p = '.*b.*c*.*.*.c*a*.c';
+
+    expected = false;
+    expect(isMatch(s, p)).toBe(expected);
+  });
 });
