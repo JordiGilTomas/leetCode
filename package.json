@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "LeetCode exercises",
   "main": "index.js",
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",

@@ -1,84 +1,84 @@
-import longestPalindrome from '../Exercises/005_longest_palindromic_substring';
+import longestPalindrome from "../exercises/005_longest_palindromic_substring";
 
-describe('Given a string s, return the longest palindromic substring in s', () => {
+describe("Given a string s, return the longest palindromic substring in s", () => {
   let s: string;
   let expected: string;
 
-  it('babad', () => {
-    s = 'babad';
-    const bothExpected = ['bab', 'aba'];
+  it("babad", () => {
+    s = "babad";
+    const bothExpected = ["bab", "aba"];
     expect(bothExpected.includes(longestPalindrome(s)));
   });
 
-  it('cbbd', () => {
-    s = 'cbbd';
-    expected = 'bb';
+  it("cbbd", () => {
+    s = "cbbd";
+    expected = "bb";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('a', () => {
-    s = 'a';
-    expected = 'a';
+  it("a", () => {
+    s = "a";
+    expected = "a";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('ac', () => {
-    s = 'ac';
-    expected = 'a';
+  it("ac", () => {
+    s = "ac";
+    expected = "a";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('abb', () => {
-    s = 'abb';
-    expected = 'bb';
+  it("abb", () => {
+    s = "abb";
+    expected = "bb";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('eabcb', () => {
-    s = 'eabcb';
-    expected = 'bcb';
+  it("eabcb", () => {
+    s = "eabcb";
+    expected = "bcb";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('ccd', () => {
-    s = 'ccd';
-    expected = 'cc';
+  it("ccd", () => {
+    s = "ccd";
+    expected = "cc";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('abcdbbfcba', () => {
-    s = 'abcdbbfcba';
-    expected = 'bb';
+  it("abcdbbfcba", () => {
+    s = "abcdbbfcba";
+    expected = "bb";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('aacabdkacaa', () => {
-    s = 'aacabdkacaa';
-    expected = 'aca';
+  it("aacabdkacaa", () => {
+    s = "aacabdkacaa";
+    expected = "aca";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('bb', () => {
-    s = 'bb';
-    expected = 'bb';
+  it("bb", () => {
+    s = "bb";
+    expected = "bb";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('ccc', () => {
-    s = 'ccc';
-    expected = 'ccc';
+  it("ccc", () => {
+    s = "ccc";
+    expected = "ccc";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('a', () => {
-    s = 'a';
-    expected = 'a';
+  it("a", () => {
+    s = "a";
+    expected = "a";
     expect(longestPalindrome(s)).toBe(expected);
   });
 
-  it('abcda', () => {
-    s = 'a';
-    expected = 'a';
+  it("abcda", () => {
+    s = "a";
+    expected = "a";
     expect(longestPalindrome(s)).toBe(expected);
   });
 });
