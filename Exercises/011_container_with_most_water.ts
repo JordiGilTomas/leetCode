@@ -1,7 +1,5 @@
 export default function maxArea(height: number[]): number {
-  let waterContainer = height[0];
-
-  height.forEach((value, index) => {
+  return height.reduce((acc, value, index) => {
     let sum = 0;
     for (let j = index + 1; j < height.length; j++) {
       const actualIndex = j - index;
@@ -10,8 +8,6 @@ export default function maxArea(height: number[]): number {
         sum = Math.max(sum, actualIndex * actualValue);
       }
     }
-    waterContainer = Math.max(waterContainer, sum);
-  });
-
-  return waterContainer;
+    return Math.max(acc, sum);
+  }, Math.min(...height));
 }
