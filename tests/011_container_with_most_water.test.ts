@@ -36,4 +36,10 @@ describe(`Given n non-negative integers a1, a2, ..., an , where each represents 
     expected = 1;
     expect(maxArea(x)).toBe(expected);
   });
+
+  it("[2, 1]", () => {
+    x = [2, 1];
+    expected = 1;
+    expect(maxArea(x)).toBe(expected);
+  });
 });
