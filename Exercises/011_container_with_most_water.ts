@@ -6,8 +6,12 @@ export default function maxArea(height: number[]): number {
       const actualValue = height[j];
       if (actualValue <= value) {
         sum = Math.max(sum, actualIndex * actualValue);
+      } else {
+        sum = Math.max(sum, value * actualIndex);
       }
     }
     return Math.max(acc, sum);
-  }, Math.min(...height));
+  }, 0);
 }
+
+console.log(maxArea([1, 2, 4, 3]));
