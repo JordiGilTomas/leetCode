@@ -1,5 +1,5 @@
 export default function maxArea(height: number[]): number {
-  let waterContainer = 0;
+  let waterContainer = height[0];
 
   height.forEach((value, index) => {
     let sum = 0;
