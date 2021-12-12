@@ -1,17 +1,28 @@
 export default function maxArea(height: number[]): number {
-  return height.reduce((acc, value, index) => {
-    let sum = 0;
-    for (let j = index + 1; j < height.length; j++) {
-      const actualIndex = j - index;
-      const actualValue = height[j];
-      if (actualValue <= value) {
-        sum = Math.max(sum, actualIndex * actualValue);
-      } else {
-        sum = Math.max(sum, value * actualIndex);
+  let sortedIndex: number;
+  let sum: number;
+  const sorted = Array.from(new Set(height)).sort((a, b) => b - a);
+  let waterContainer = sorted[sorted.length - 1];
+
+  for (let i = 0; i < height.length; i++) {
+    sum = 0;
+    sortedIndex = 0;
+    for (let j = 1; j < height.length; j++) {
+      const lastMax = height.lastIndexOf(sorted[sortedIndex], height.length);
+      sortedIndex += 1;
+
+      if (lastMax !== -1) {
+        const currentSum =
+          Math.min(height[i], sorted[sortedIndex - 1]) * (lastMax - i);
+        j += lastMax - 1;
+        if (currentSum > sum) {
+          sum = currentSum;
+        }
       }
     }
-    return Math.max(acc, sum);
-  }, 0);
+    if (sum > waterContainer) {
+      waterContainer = sum;
+    }
+  }
+  return waterContainer;
 }
-
-console.log(maxArea([1, 2, 4, 3]));
