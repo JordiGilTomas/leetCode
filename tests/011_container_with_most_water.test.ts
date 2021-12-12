@@ -7,27 +7,33 @@ describe(`Given n non-negative integers a1, a2, ..., an , where each represents 
   let x: number[];
   let expected: number;
 
-  it("[1, 8, 6, 2, 5, 4, 8, 3, 7], 49", () => {
+  it("[1, 8, 6, 2, 5, 4, 8, 3, 7]", () => {
     x = [1, 8, 6, 2, 5, 4, 8, 3, 7];
     expected = 49;
     expect(maxArea(x)).toBe(expected);
   });
 
-  it("[1, 1], 1", () => {
+  it("[1, 1]", () => {
     x = [1, 1];
     expected = 1;
     expect(maxArea(x)).toBe(expected);
   });
 
-  it("[[4,3,2,1,4]], 16", () => {
+  it("[[4,3,2,1,4]]", () => {
     x = [4, 3, 2, 1, 4];
     expected = 16;
     expect(maxArea(x)).toBe(expected);
   });
 
-  it("[1, 2, 1], 1", () => {
+  it("[1, 2, 1]", () => {
     x = [1, 2, 1];
     expected = 2;
+    expect(maxArea(x)).toBe(expected);
+  });
+
+  it("[1, 2]", () => {
+    x = [1, 2];
+    expected = 1;
     expect(maxArea(x)).toBe(expected);
   });
 });
